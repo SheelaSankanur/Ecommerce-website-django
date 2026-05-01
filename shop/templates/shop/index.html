@@ -1,0 +1,317 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %} Home | Shop - E-Commerce{% endblock %}
+
+{% block css %}
+<style>
+  body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .carousel-inner {
+    padding: 40px 0;
+  }
+
+  .card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .card-img-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .card:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #007bff;
+    border-radius: 50%;
+    padding: 10px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 3%;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    background-color: #4848ff;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .carousel-indicators .active {
+    opacity: 1;
+  }
+
+  .btn-primary {
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    border: none;
+    transition: background 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(to right, #0056b3, #0093c9);
+  }
+
+  @media (min-width: 768px) {
+    .carousel-inner .row {
+      justify-content: center;
+    }
+
+    .row-cols-md-3>* {
+      width: 27.333333%;
+    }
+  }
+
+  .feature-highlights {
+    background: #f0f4ff;
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    margin: 4rem 0;
+  }
+
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    background: rgb(8 0 255);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+</style>
+{% endblock css %}
+
+{% load static %}
+{% load extras %}
+
+{% block body %}
+
+<div class="container">
+
+  <div class="p-5 bg-body-tertiary rounded-3">
+    <div class="container-fluid">
+      <h1 class="display-5 fw-bold">Explore Our Products</h1>
+      <p class="lead">Discover cutting-edge gadgets with premium quality and unbeatable prices</p>
+    </div>
+  </div>
+
+  {% for block in all_products %}
+  <h2 style="margin-left: 6rem;">{{ block.category }}
+    <span><a href="category/{{ block.category }}" class="btn float-end text-primary "> See All <i class="fas fa-arrow-right"></i> </a></span>
+  </h2>
+  
+  <div id="{{ block.carousel_id }}" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      {% for _ in block.range %}
+      <button type="button" data-bs-target="#{{ block.carousel_id }}" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-label="Slide {{ forloop.counter }}"> </button>
+      {% endfor %}
+    </div>
+
+    <div class="carousel-inner">
+      {% for chunk in block.products|make_chunks:3 %} 
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for product in chunk %}
+          <div class="col">
+            <div class="card">
+              <img src="/media/{{ product.image }}" class="card-img-top" alt="{{ product.product_name }}">
+              <div class="card-body">
+                <h5 id="nameproduct_{{ product.product_id }}" class="card-title">{{ product.product_name }}</h5>
+                <p class="card-text"> <strong>Price:</strong> Rs.
+                  <span id="priceproduct_{{ product.product_id }}" class="priceproduct">{{ product.price }}</span>
+                </p>
+                {% comment %} <p class="card-text">{{ product.desc|truncatewords:17 }}..</p> {% endcomment %}
+                <span id="divproduct_{{ product.product_id }}" class="divproduct">
+                  <button id="product_{{ product.product_id }}" class="btn btn-primary cart">Add to Card</button>
+                </span>
+                <a id="qv_prod_{{ product.product_id }}" href="/shop/productView/{{ product.product_id }}" class="btn btn-primary">Quick View </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#{{ block.carousel_id }}" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#{{ block.carousel_id }}" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  {% endfor %}
+
+  <div class="feature-highlights">
+    <div class="row text-center">
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="feature-icon">
+          <i class="fas fa-truck fa-2x text-white"></i>
+        </div>
+        <h5>Free Shipping</h5>
+        <p class="mb-0">On orders over Rs. 99999</p>
+      </div>
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="feature-icon">
+          <i class="fas fa-sync-alt fa-2x text-white"></i>
+        </div>
+        <h5>30-Day Returns</h5>
+        <p class="mb-0">No questions asked</p>
+      </div>
+      <div class="col-md-3 mb-4 mb-md-0">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt fa-2x text-white"></i>
+        </div>
+        <h5>2-Year Warranty</h5>
+        <p class="mb-0">On all products</p>
+      </div>
+      <div class="col-md-3">
+        <div class="feature-icon">
+          <i class="fas fa-headset fa-2x text-white"></i>
+        </div>
+        <h5>24/7 Support</h5>
+        <p class="mb-0">Dedicated customer service</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <p class="col-md-8 fs-4">We are a leading e-commerce platform for buying and selling products.</p>
+      <button class="btn btn-primary btn-lg" type="button">Learn more</button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+  }
+
+  $('.divproduct').on('click', 'button.cart', function () {
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+      quantity = cart[idstr][0] + 1;
+      
+    } else {
+      quantity = 1;
+      productName = document.getElementById('name' + idstr).innerHTML;
+      productPrice = document.getElementById('price' + idstr).innerHTML;
+      cart[idstr] = [quantity, productName, productPrice];
+    }
+    updateCart(cart);
+  })
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const popoverTrigger = document.querySelector('#cart_popover');
+    new bootstrap.Popover(popoverTrigger);
+    updatePopover();
+  });
+
+  function updatePopover() {
+    const cartData = localStorage.getItem('cart');
+    const popoverBtn = document.getElementById('cart_popover');
+    if (!cartData) {
+      popoverBtn.setAttribute('data-bs-title', 'Your cart is empty');
+      popoverBtn.setAttribute('data-bs-content', 'Your available cart items will be displayed here. Now, no items to display.');
+      return;
+    }
+    const cart = JSON.parse(cartData);
+    let itemCount = 0;
+
+    let contentHTML = '<ul class="list-group list-group-flush">';
+
+    for (const key in cart) {
+      const product = document.getElementById('name' + key);
+      const quantity = cart[key][0];
+      itemCount += quantity;
+      contentHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+            ${product.innerHTML} 
+            <span class="badge bg-primary rounded-pill float-end">${quantity}</span> 
+        </li>`;
+    }
+
+    contentHTML += `</ul> <div class="" style="gap: 10px;"> 
+      <a href="/shop/checkout/" class="btn btn-primary">Checkout</a></div>`;
+    const existingPopover = bootstrap.Popover.getInstance(popoverBtn);
+    if (existingPopover) {
+      existingPopover.dispose();
+    }
+
+    popoverBtn.setAttribute('data-bs-title', `You have ${itemCount} items in your cart`);
+    popoverBtn.setAttribute('data-bs-content', contentHTML);
+
+    const newPopover = new bootstrap.Popover(popoverBtn, {
+      html: true,
+    });
+  }
+
+  function updateCart(cart) {
+    var totalCartCount = 0;
+    for (var item in cart) {
+      totalCartCount += cart[item][0];
+      const container = document.getElementById('div' + item);
+      if (container) {
+        container.innerHTML =
+          "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "'>"
+          + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'>+</button>";
+      }
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart_count').innerHTML = totalCartCount;
+    updatePopover();
+  }
+
+  $('.divproduct').on('click', 'button.minus', function () {
+    var idstr = this.id.slice(5,);
+    cart[idstr][0] -= 1;
+    cart[idstr][0] = Math.max(0, cart[idstr][0]);
+    document.getElementById('val' + idstr).innerHTML = cart[idstr][0];
+    if (cart[idstr][0] == 0) {
+      delete cart[idstr];
+      const container = document.getElementById('div' + idstr);
+      if (container) {
+        container.innerHTML = `
+          <button id='${idstr}' class='btn btn-primary cart'>Add to cart</button>`;
+      }
+    } else {
+      document.getElementById('val' + idstr).innerHTML = cart[idstr][0];
+    }
+    updateCart(cart);
+  })
+
+  $('.divproduct').on('click', 'button.plus', function () {
+    var idstr = this.id.slice(4,);
+    cart[idstr][0] += 1;
+    document.getElementById('val' + idstr).innerHTML = cart[idstr][0];
+    updateCart(cart);
+  })
+</script>
+{% endblock %}

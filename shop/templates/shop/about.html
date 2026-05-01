@@ -1,0 +1,46 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %} About | Shop - E-Commerce{% endblock %}
+
+{% block css %} <style>
+  .jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+  }
+</style>
+{% endblock %}
+
+{% block body %} <div class="container">
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">About Us</h1>
+      <p class="col-md-8 fs-4">
+        We are a trusted e-commerce platform specializing in high-quality electronic gadgets. From the latest
+        smartphones to powerful laptops, we offer a wide selection of devices at competitive prices. Our goal is to
+        deliver a seamless, secure, and satisfying online shopping experience.
+      </p>
+      <a href="/shop/" class="btn btn-primary btn-lg" type="button">Shop Now</a>
+    </div>
+  </div>
+
+  <div class="row align-items-md-stretch mb-5">
+    <div class="col-md-6">
+      <div class="h-100 p-5 text-bg-dark rounded-3">
+        <h2>Top Brands, Great Deals</h2>
+        <p> Explore our wide range of products from leading brands like Apple, Samsung, Dell, Lenovo, and more. Enjoy
+          unbeatable deals, seasonal offers, and fast delivery. </p>
+        <a href="/shop/" class="btn btn-outline-light" type="button">Browse Products</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h2>Why Shop With Us?</h2>
+        <p>We combine quality, affordability, and customer support to make your shopping experience hassle-free. All
+          gadgets are 100% genuine and come with warranty and after-sales service. </p>
+        <button class="btn btn-outline-secondary" type="button">Learn More</button>
+      </div>
+    </div>
+  </div>
+</div> {% endblock %}

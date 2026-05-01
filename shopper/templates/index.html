@@ -1,0 +1,151 @@
+{% extends 'shop/basic.html/' %}
+
+{% block title %} Home - E-Commerce{% endblock %}
+
+{% block css %}
+<style>
+  .slider {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    width: 100%;
+    opacity: 1;
+    filter: brightness(36%);
+  }
+
+  .slider .list .item .content {
+    position: absolute;
+    top: 20%;
+    max-width: 1140px;
+    left: 40%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    color: #FFF;
+    text-shadow: 0 5px 10px rgba(122, 116, 116, 0.267);
+  }
+
+  .slider .list .item .content .title,
+  .slider .list .item .content .type {
+    font-family: "Source Code Pro", monospace;
+    font-size: 5em;
+    font-weight: bold;
+    line-height: 1.3em;
+  }
+
+  .slider .list .item .content .type {
+    color: #14ff72cd;
+  }
+
+  .slider .list .item .content .description {
+    font-size: 19px;
+  }
+
+  .slider .list .item .content .btn {
+    margin-top: 20px;
+  }
+
+  .slider .list .item .content .btn button {
+    border: none;
+    background-color: #eee;
+    padding: 7px 15px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: 0.4s;
+    border-radius: 2px;
+  }
+
+  .slider .list .item .content .btn button:hover {
+    background-color: #14ff72cd;
+    color: #eee;
+  }
+
+  .slider .item .list:nth-child(1) {
+    z-index: 1;
+  }
+
+  .slider .list .item:nth-child(1) .content .title,
+  .slider .list .item:nth-child(1) .content .type,
+  .slider .list .item:nth-child(1) .content .description,
+  .slider .list .item:nth-child(1) .content .btn {
+    transform: translateY(50px);
+    filter: blur(20px);
+    opacity: 0;
+    animation: showContent .5s linear 1 forwards;
+  }
+
+  @keyframes showContent {
+    to {
+      transform: translateY(0px);
+      filter: blur(00px);
+      opacity: 1;
+    }
+  }
+
+  .slider .list .item:nth-child(1) .content .title {
+    animation-delay: 0.3s;
+  }
+
+  .slider .list .item:nth-child(1) .content .type {
+    animation-delay: 0.5s;
+  }
+
+  .slider .list .item:nth-child(1) .content .description {
+    animation-delay: 0.6s;
+  }
+
+  .slider .list .item:nth-child(1) .content .title {
+    animation-delay: 0.4s;
+  }
+</style>
+{% endblock css %}
+
+{% load static %}
+{% load extras %}
+
+{% block body %}
+<div class="slider">
+  <div class="list">
+    <div class="item">
+      <img src="../../media/home.jpg" alt="Image of Vendor Valley">
+      <div class="content">
+        <div class="title">Welcome to</div>
+        <div class="type">E-Commerce</div>
+        <div class="description">We are a trusted e-commerce platform specializing in high-quality
+          electronic
+          gadgets from top brands.</div>
+        <div class="btn">
+          <a href="/shop/" class="btn btn-primary btn-lg" type="button">
+            Shop Now
+          </a>
+          <a href="/blog/" class="btn btn-primary btn-lg" type="button">
+            Go to Blog
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">Explore Categories</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for category in category_cards %}
+    <div class="col">
+      <div class="card h-100 shadow">
+        <img src="/media/{{ category.image }}" class="card-img-top" alt="{{ category.category }}">
+        <div class="card-body text-center">
+          <a href="/shop/category/{{ category.category }}" class="btn btn-primary">
+            Browse {{ category.category }}
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock body %}

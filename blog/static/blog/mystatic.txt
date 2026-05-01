@@ -1,0 +1,2 @@
+this is my static file and 
+i am going to show you how to access static files from django project

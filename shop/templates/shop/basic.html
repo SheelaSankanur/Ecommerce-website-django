@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %} {% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">   
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <style>
+      footer a {
+        text-decoration: none;
+      }
+    </style>
+  {% block css %} {% endblock %}
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">E-Commerce</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"> <a class="nav-link" aria-current="page" href="/shop/">Shop</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="/shop/about/">About</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="/shop/tracker/">Tracker</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="/shop/contact/">Contact</a> </li>
+          <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Blog </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/blog/">Blog</a></li>
+              <li><a class="dropdown-item" href="/blog/blogpost/">Posts</a></li>
+              <li> <hr class="dropdown-divider"> </li>
+              <li><a class="dropdown-item" href="#">Help</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search" action="/shop/search/" method="get">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  name="search" required/>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <!-- <a href="/login/" class="btn btn-outline-primary mx-1">Login</a>
+        <a href="/register/" class="btn btn-outline-primary mx-1">Register</a> -->
+
+        {% if user.is_authenticated %}
+    <span style="color:white; margin-right:10px;">
+        👋 Welcome, {{ user.username }}
+    </span>
+    <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Logout</a>
+{% else %}
+    <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm mx-1">Login</a>
+    <a href="{% url 'register' %}" class="btn btn-primary btn-sm mx-1">Register</a>
+{% endif %}
+        
+        <button id="cart_popover" type="button" class="btn btn-secondary position-relative mx-2" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-custom-class="custom-popover" data-bs-html="true"
+          data-bs-title="Your Cart" data-bs-content="Your available cart items will be displayed here. Now, no items to display.">
+          Cart <span id="cart_count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            0 <span class="visually-hidden">unread messages</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  {% block body %}{% endblock %}
+
+  <footer class="bd-footer py-4 py-md-5 mt-5 bg-body-tertiary">
+    <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary">
+      <div class="row">
+        <div class="col-lg-3 mb-3"> <a class="d-inline-flex align-items-center mb-2 text-body-emphasis text-decoration-none" href="/shop/" aria-label="Bootstrap"> 
+              <title>E-Commerce</title>
+            </svg> <span class="fs-5">E-Commerce</span> </a>
+          <ul class="list-unstyled small">
+            <li class="mb-2"> Designed and built with all the love in the world by the <a href="https://ganeshrawat.com.np.">Developers team</a> with the help of <a href="https://www.youtube.com/playlist?list=PLu0W_9lII9ah7DDtYtflgwMwpT3xmjXY9">CWH Tutorials</a>. </li>
+            <li class="mb-2">Currently v1.0.0.</li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+          <h5>Links</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="/shop/">Home</a></li>
+            <li class="mb-2"><a href="/shop/about/">About</a></li>
+            <li class="mb-2"><a href="/shop/contact/">Contact</a></li>
+            <li class="mb-2"><a href="/shop/tracker/">Tracker</a></li>
+            <li class="mb-2"><a href="/blog/">Blog</a></li>
+            <li class="mb-2"><a href="https://github.com/sheelasankanur" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5>Guides</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#">Youtube tutorials</a></li>
+                      
+            <li class="mb-2"><a href="https://www.linkedin.com/in/sheelasankanur" target="_blank" rel="noopener">Linkedin</a></li>
+          </ul>
+        </div>
+        
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" ></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  {% block js %} {% endblock %}
+</body>
+
+</html>

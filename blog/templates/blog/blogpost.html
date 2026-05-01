@@ -1,0 +1,128 @@
+{% extends 'blog/basic.html' %}
+
+{% block title %} Blog - E-Commerce{% endblock %}
+
+{% block css %}
+<style>
+  .sidebar a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  .sidebar a:hover {
+    color: #007bff;
+  }
+</style>
+{% endblock css %}
+
+{% load static %}
+
+{% block body %}
+
+<header class="blog-header bg-white border-bottom shadow-sm mt-3">
+  <div class="container py-3 justify-content-between align-items-center">
+    <h1>E-Commerce Blog</h1>
+    <p class="lead">Explore the latest in tech & gadgets</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="container my-5">
+    <div class="row">
+
+      <div class="col-lg-8">
+        {% if blogposts %}
+          {% for post in blogposts %}
+           <article>
+            <h2 class="mb-3">  {{ post.title }}</h2>
+            <p class="post-meta">By <strong>E-Commerce Team</strong> | Published on {{ post.pub_date }}</p>
+
+            <img src="/media/{{ post.thumbnail }}" class="img-fluid rounded mx-auto d-block" alt="Top laptops" class="featured-img">
+
+            <p> {{ post.content }}</p>
+
+            <h4>1. {{ post.head1 }}</h4>
+            <p> {{ post.chead1 }}</p>
+
+            <h4>2. {{ post.head2 }}</h4>
+            <p> {{ post.chead2 }}</p>
+
+            <h4>3. {{ post.head3 }}</h4>
+            <p> {{ post.chead3 }}</p>
+
+            <h4>4. {{ post.head4 }}</h4>
+            <p> {{ post.chead4 }}</p>
+
+            <h4>5. {{ post.head5 }}</h4>
+            <p> {{ post.chead5 }}</p>
+
+            <blockquote class="blockquote my-4">
+              <p>"{{ post.adminquote }}" — Tech Editor, E-Commerce</p>
+            </blockquote>
+
+            <p> {{ post.summary }}</p>
+            <hr class="my-4">
+          </article>
+          {% endfor %}
+        {% endif %}
+
+        {% if blogpost %}
+          <article>
+            <h2 class="mb-3">  {{ blogpost.title }}</h2>
+            <p class="post-meta">By <strong>E-Commerce Team</strong> | Published on {{ blogpost.pub_date }}</p>
+            <img src="/media/{{ blogpost.thumbnail }}" class="img-fluid rounded mx-auto d-block" alt="Top laptops" class="featured-img">
+            <p> {{ blogpost.content }}</p>
+            <h4>1. {{ blogpost.head1 }}</h4>
+            <p> {{ blogpost.chead1 }}</p>
+            <h4>2. {{ blogpost.head2 }}</h4>
+            <p> {{ blogpost.chead2 }}</p>
+            <h4>3. {{ blogpost.head3 }}</h4>
+            <p> {{ blogpost.chead3 }}</p>
+            <h4>4. {{ blogpost.head4 }}</h4>
+            <p> {{ blogpost.chead4 }}</p>
+            <h4>5. {{ blogpost.head5 }}</h4>
+            <p> {{ blogpost.chead5 }}</p>
+            <blockquote class="blockquote my-4">
+              <p>"{{ blogpost.adminquote }}" — Tech Editor, E-Commerce</p>
+            </blockquote>
+            <p> {{ blogpost.summary }}</p>
+            <hr class="my-4">
+          </article>
+        {% endif %}
+
+      </div>
+
+      <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="sidebar">
+          <h5>Categories</h5>
+          <ul class="list-unstyled">
+            <li><a href="/../../shop/category/Laptop">Laptops</a></li>
+            <li><a href="/../../shop/category/Mobile">Smartphones</a></li>
+            <li><a href="#">Gadgets</a></li>
+            <li><a href="#">Tips & Guides</a></li>
+            <li><a href="#">Product Reviews</a></li>
+          </ul>
+          <hr>
+          <h5>Recent Posts</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Smartphone Trends in 2025</a></li>
+            <li><a href="#">Best Tech Gadgets Under $100</a></li>
+            <li><a href="#">How to Set Up Your New Device</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="fb-like" data-href="http://127.0.0.1:8000/blog/blogpost/{{ blogpost.post_id }}" data-width="" data-layout="" data-action="" data-size="" data-share="true"></div>
+      <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{ blogpost.post_id }}" data-width="" data-numposts="5"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

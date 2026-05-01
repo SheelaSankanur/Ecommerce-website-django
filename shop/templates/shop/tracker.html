@@ -1,0 +1,121 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %} Tracker | Shop - E-Commerce{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block body %}
+<header class="bg-white border-bottom shadow-sm mt-3">
+  <div class="container py-3 d-flex justify-content-between align-items-center">
+    <h2 class="mb-0"> Track Your Order</h2>
+    <a href="/shop/" class="btn btn-outline-primary btn-sm">Back to Shop</a>
+  </div>
+</header>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Track Your Order</h2>
+  <form id="trackForm" method="post" class="row justify-content-center" action="#">
+    {% csrf_token %}
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label for="orderId" class="form-label">Order ID</label>
+        <input type="text" class="form-control" id="orderId" name="orderId" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Registered Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Track</button>
+    </div>
+  </form>
+  <div id="orderStatus" class="mt-4 row justify-content-center "> </div>
+</div>
+
+
+</div> {% endblock %}
+
+{% block js %}
+
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let totalCartCount = 0;
+    cart = JSON.parse(localStorage.getItem('cart'));
+    for (var item in cart) {
+      totalCartCount += cart[item][0];
+    }
+    document.getElementById('cart_count').innerHTML = totalCartCount;
+  })
+
+  $('#trackForm').submit(function (event) {
+    $('#items').empty();
+    event.preventDefault();
+    var formData = {
+      'orderId': $('input[name=orderId]').val(),
+      'email': $('input[name=email]').val(),
+      'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/shop/tracker/',
+      data: formData,
+      dataType: 'json',
+      encode: true
+    }).done(function (data) {
+      $('#items').empty();
+      $('#orderStatus').empty();
+      if (data.status === 'success') {
+        data.updates.forEach((update, index) => {
+          let itemsId = `items-${index}`;
+          let divOrder = `
+              <div class="card mb-3 shadow-sm" style="max-width: 550px;">
+                <div class="card-body">
+                  <h5 class="card-title">Your Order</h5>
+                  <hr class="my-4">
+                  <ul id="${itemsId}" class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                      <div>
+                        <h6 class="my-0">${update.text}</h6>
+                        <small class="text-muted">${update.time}</small>
+                      </div>
+                    </li>
+                  </ul>
+                  <hr class="my-4">
+                  <h6 class="card-title text-center lead">Thank You!</h6>
+                </div>
+              </div>
+            `;
+          $('#orderStatus').append(divOrder);
+        });
+      } else {
+        console.log(data.status);
+
+        $('#orderStatus').append(`
+          <div class="w-50 alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> ${data.status}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        `);
+      }
+    });
+    $('#orderId').val('');
+    $('#email').val('');
+  });
+
+</script>
+{% endblock %}
