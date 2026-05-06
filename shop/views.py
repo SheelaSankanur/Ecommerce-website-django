@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from .models import Product, Contact, Order, Orderupdate
 from math import ceil
 import json
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+
 
 def index(request):
     from math import ceil
@@ -121,10 +126,6 @@ def category(request, category):
     return render(request, 'shop/category.html', {'category': category, 'products': products})
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib import messages
-
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -139,10 +140,6 @@ def register(request):
         return redirect('login')
 
     return render(request, 'register.html')
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
 
 def user_login(request):
     if request.method == "POST":

@@ -4,11 +4,11 @@
 
 {% block css %}
 <style>
-  .product-card {
+  .product-cart {
     transition: transform 0.2s, box-shadow 0.2s;
   }
 
-  .product-card:hover {
+  .product-cart:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
@@ -35,19 +35,18 @@
 <div class="container py-5">
   <h2 class="mb-4">Search Results</h2>
   <div class="row g-4">
-    {% for group in searched_products %}
     {% for product in group.products %}
     <div class="col-md-4">
-      <div class="card product-card h-100">
-        <img src="/media/{{ product.image }}" class="card-img-top" alt="{{ product.product_name }}">
+      <div class="card product-cart h-100">
+        <img src="/media/{{ product.image }}" class="cart-img-top" alt="{{ product.product_name }}">
         <div class="card-body">
-          <h5 id="nameproduct_{{ product.product_id }}" class="card-title">{{ product.product_name }}</h5>
+          <h5 id="nameproduct_{{ product.product_id }}" class="cart-title">{{ product.product_name }}</h5>
           <p class="card-text"> Rs.
             <span id="priceproduct_{{ product.product_id }}" class="priceproduct price-tag">{{ product.price }}</span>
           </p>
-          <p class="card-text">{{ product.desc|truncatewords:17 }}..</p>
+          <p class="cart-text">{{ product.desc|truncatewords:17 }}..</p>
           <span id="divproduct_{{ product.product_id }}" class="divproduct">
-            <button id="product_{{ product.product_id }}" class="btn btn-primary cart">Add to Card</button>
+            <button id="product_{{ product.product_id }}" class="btn btn-primary cart">Add to Cart</button>
           </span>
           <a id="qv_prod_{{ product.product_id }}" href="/shop/productView/{{ product.product_id }}" class="btn btn-primary">Quick View </a>
         </div>

@@ -42,12 +42,9 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  name="search" required/>
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <!-- <a href="/login/" class="btn btn-outline-primary mx-1">Login</a>
-        <a href="/register/" class="btn btn-outline-primary mx-1">Register</a> -->
-
         {% if user.is_authenticated %}
     <span style="color:white; margin-right:10px;">
-        👋 Welcome, {{ user.username }}
+        👋 Welcome,{{ user.username }}
     </span>
     <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Logout</a>
 {% else %}
@@ -74,7 +71,7 @@
               <title>E-Commerce</title>
             </svg> <span class="fs-5">E-Commerce</span> </a>
           <ul class="list-unstyled small">
-            <li class="mb-2"> Designed and built with all the love in the world by the <a href="https://ganeshrawat.com.np.">Developers team</a> with the help of <a href="https://www.youtube.com/playlist?list=PLu0W_9lII9ah7DDtYtflgwMwpT3xmjXY9">CWH Tutorials</a>. </li>
+            <li class="mb-2"> Designed and built with all the love in the world by the <a href="#">Developers team</a> with the help of <a href="#">CWH Tutorials</a>. </li>
             <li class="mb-2">Currently v1.0.0.</li>
           </ul>
         </div>
